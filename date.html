@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Converter</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #633fce;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #outputBox {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <label for="inputDate">Box: inputDate</label>
+    <input type="text" id="inputDate" placeholder="Enter date (DD/MM/YYYY)" />
+
+    <label for="inputFormat">Box: inputFormat</label>
+    <input type="text" id="inputFormat" placeholder="Enter input date format" />
+
+    <label for="expectedFormat">Box: expectedFormat</label>
+    <input type="text" id="expectedFormat" placeholder="Enter expected output format" />
+
+    <button onclick="convertDate()">Convert Date</button>
+
+    <div id="outputBox"></div>
+</div>
+
+<script>
+    function convertDate() {
+        var inputDate = document.getElementById('inputDate').value;
+        var inputFormat = document.getElementById('inputFormat').value;
+        var expectedFormat = document.getElementById('expectedFormat').value;
+
+        var dateObject = new Date(inputDate);
+        var formattedDate = formatDate(dateObject, inputFormat, expectedFormat);
+
+        document.getElementById('outputBox').innerHTML = "Output: " + formattedDate;
+    }
+
+    function formatDate(dateObject, inputFormat, expectedFormat) {
+        var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        var formattedDate = new Intl.DateTimeFormat('en-US', options).format(dateObject);
+
+        var dateArray = formattedDate.split('/');
+        var year = dateArray[2];
+        var month = dateArray[0];
+        var day = dateArray[1];
+
+        var outputDate = expectedFormat
+            .replace('DD', day)
+            .replace('MM', month)
+            .replace('YYYY', year);
+
+        return outputDate;
+    }
+</script>
+
+</body>
+</html>
